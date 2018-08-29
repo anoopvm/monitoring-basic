@@ -1,0 +1,98 @@
+groups:
+- name: rules
+  rules:
+  - alert: CPUUsageHigh
+    annotations:
+      description: CPU usage was high for 5 minutes and it is now normal.
+      summary: The CPU usage is {{ $value | printf "%.2f" }}%, which is greater than the threshold value of 80% for 5m.
+    expr: (((sum(irate(node_cpu{mode!="idle",mode!="iowait"}[5m])) BY (kubernetes_io_hostname,
+      site_name, cluster_name)) / (sum(irate(node_cpu[5m])) BY (kubernetes_io_hostname,
+      site_name, cluster_name))) * 100) > 80
+    for: 5m
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: warning
+
+  - alert: CPUUsageCritical
+    annotations:
+      description: CPU usage was critically high for 1 minute and it is now normal.
+      summary: CPU usage is {{ $value | printf "%.2f" }}%, which is greater than the threshold value of 90% for 1m.
+    expr: (((sum(irate(node_cpu{mode!="idle",mode!="iowait"}[5m])) BY (kubernetes_io_hostname,
+      site_name, cluster_name)) / (sum(irate(node_cpu[5m])) BY (kubernetes_io_hostname,
+      site_name, cluster_name))) * 100) > 90
+    for: 1m
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
+
+  - alert: MemoryUsageHigh
+    annotations:
+      description: Memory usage was high for 5 minutes and it is now normal.
+      summary: Memory usage at {{ $value | printf "%.2f"}}%, which exceeds the threshold
+        value of 80% for 5m.
+    expr: (((node_memory_MemTotal - node_memory_MemAvailable) / node_memory_MemTotal)
+      * 100) > 80
+    for: 5m
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: warning
+      
+  - alert: MemoryUsageCritical
+    annotations:
+      description: Memory usage was critically high for 1 minute and it is now normal.
+      summary: Memory usage is critical with {{ $value | printf "%.2f"}}%, which exceeds
+        the threshold value of 90% for 1m.
+    expr: (((node_memory_MemTotal - node_memory_MemAvailable) / node_memory_MemTotal)
+      * 100) > 90
+    for: 1m
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
+      
+  - alert: DiskSpaceHigh
+    annotations:
+      description: Device file system usage exceeded the threshold below for 5 minutes and it is now normal.
+      summary: '{{ $value | printf "%.2f"}}%, of disk space is utilised by file system, which exceeds the threshold value of 80% for 5m.'
+    expr: (100 - 100 * (node_filesystem_free{device!~"by-uuid",device!~"tmpfs",mountpoint="/"} / node_filesystem_size{device!~"by-uuid",device!~"tmpfs",mountpoint="/"})) > 80
+    for: 5m
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: warning
+      
+  - alert: DiskSpaceCritical
+    annotations:
+      description: Device file system usage exceeded the threshold below for 1 minute and it has come to normal now.
+      summary: Device file system usage exceeds the threshold value of 90% with critical value of {{ $value | printf "%.2f" }}% for 1m.
+    expr: (100 - 100 * (node_filesystem_free{device!~"by-uuid",device!~"tmpfs",mountpoint="/"} / node_filesystem_size{device!~"by-uuid",device!~"tmpfs",mountpoint="/"})) > 90
+    for: 1m
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
+      
+  - alert: TemperatureHigh
+    annotations:
+      description: Temperature was high for 5 minutes and it is now normal.
+      summary: The temperature is {{ $value }} degrees Celsius, which is greater than the threshold limit of 70 degrees Celsius for 5m.
+    expr: (max(node_hwmon_temp_celsius) BY (kubernetes_io_hostname, site_name, cluster_name)) > 70
+    for: 5m
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: warning
+      
+  - alert: TemperatureCritical
+    annotations:
+      description: Temperature was critically high 1 minute and it is now normal.
+      summary: The temperature is {{ $value }} degrees Celsius, which is greater than the threshold limit 80 degrees Celsius for 1m.
+    expr: (max(node_hwmon_temp_celsius) BY (kubernetes_io_hostname, site_name, cluster_name)) > 80
+    for: 1m
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
