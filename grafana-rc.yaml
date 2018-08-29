@@ -25,11 +25,11 @@ spec:
           value: "admin"
         ports:
         - containerPort: 3000
-        volumeMounts:
-        - mountPath: /etc/grafana/provisioning/dashboards
-          name: grafana-volume
-      volumes:
-      - name: grafana-volume
-        persistentVolumeClaim:
-          claimName: telemetry-pvc
+          #        volumeMounts:
+          #        - mountPath: /etc/grafana/provisioning/dashboards
+          #          name: grafana-volume
+          #      volumes:
+          #      - name: grafana-volume
+          #        persistentVolumeClaim:
+          #          claimName: telemetry-pvc
 
