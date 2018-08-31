@@ -12,14 +12,13 @@ spec:
       labels:
         app: alertmanager
     spec:
-      hostNetwork: true
       nodeSelector:
         monitoring: telemetry
       containers:
       - name: alertmanager
         image: prom/alertmanager
         args:
-          - -config.file=/etc/alertmanager/config_out/alertmanager.yml
+          - --config.file=/etc/alertmanager/config_out/alertmanager.yml
         ports:
         - containerPort: 9093
         volumeMounts:
