@@ -21,35 +21,16 @@ alerting:
 rule_files:
    - "/etc/prometheus/config_out/rules.yaml"
   # - "second.rules"
-
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
-
-    # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
-    scrape_timeout: 10s
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
-    target_groups:
-      - targets: ['localhost:9090']
-
-  - job_name: node
-    # If prometheus-node-exporter is installed, grab stats about the local
-    # machine by default.
-    target_groups:
-      - targets: ['localhost:9100']
-    # Add the nodes from which the node exporter metrics has to be collected below
-  - job_name: node1
-    target_groups:
-      - targets: ['node1:9100']
-  - job_name: node2
-    target_groups:
-      - targets: ['node2:9100']
-  - job_name: node3
-    target_groups:
-      - targets: ['node3:9100']
+   static_configs:
+   - targets: ['localhost:9090']
+ - job_name: 'node-exporter'
+   static_configs:
+   - targets: ['localhost:9100', 'node3:9100']
+ - job_name: 'kube-metrics'
+   static_configs:
+   - targets: ['node1:4194']
