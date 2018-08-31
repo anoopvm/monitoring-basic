@@ -12,7 +12,6 @@ spec:
       labels:
         app: alertmanager
     spec:
-      hostNetwork: true
       nodeSelector:
         monitoring: telemetry
       containers:

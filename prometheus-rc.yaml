@@ -12,7 +12,6 @@ spec:
       labels:
         app: prometheus
     spec:
-      hostNetwork: true
       nodeSelector:
         monitoring: telemetry
       containers:
