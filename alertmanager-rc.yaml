@@ -18,6 +18,14 @@ spec:
       containers:
       - name: alertmanager
         image: prom/alertmanager
+        args:
+          - -config.file=/etc/alertmanager/config_out/alertmanager.yml
         ports:
         - containerPort: 9093
-          hostPort: 9093
+        volumeMounts:
+        - mountPath: /etc/alertmanager/config_out
+          name: alertmanager-volume
+      volumes:
+      - name: alertmanager-volume
+        persistentVolumeClaim:
+          claimName: telemetry-pvc

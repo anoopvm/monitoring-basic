@@ -1,0 +1,31 @@
+global:
+  resolve_timeout: 5m
+route:
+  receiver: 'slack'
+  routes:
+  - match_re:
+      alertname: '.*'
+    receiver: 'webhook'
+    continue: true
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+inhibit_rules:
+- source_match:
+    severity: critical
+  target_match:
+    severity: warning
+  equal:
+  - alertname
+
+receivers:
+- name: 'slack'
+  slack_configs:
+  - send_resolved: true
+    api_url: 'https://hooks.slack.com/services/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'
+    channel: '#monitoring-alerts'
+
+- name: 'webhook'
+  webhook_configs:
+  - send_resolved: false
+    url: 'http://node3:9333/'
