@@ -8,6 +8,7 @@ echo "Deleting PODs..."
 kubectl delete -f prometheus-svc.yaml
 kubectl delete -f grafana-svc.yaml
 kubectl delete -f alertmanager-svc.yaml
+kubectl delete -f node-exporter.yaml
 kubectl delete -f prometheus-rc.yaml
 kubectl delete -f grafana-rc.yaml
 kubectl delete -f alertmanager-rc.yaml
