@@ -5,5 +5,5 @@ datasources:
    name: 'prom'                    # name of the datasource
    org_id: 1                             # id of the organization to tie this datasource to
    type: 'prometheus'                    # type of the data source
-   url: 'http://96.112.167.3:31000'         # url of the prom instance
+   url: 'http://node1:31000'         # url of the prom instance
    version: 1                            # well, versioning
