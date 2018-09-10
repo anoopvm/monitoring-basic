@@ -8,7 +8,7 @@ echo "Creating PODs..."
 kubectl create -f prometheus-svc.yaml
 kubectl create -f grafana-svc.yaml
 kubectl create -f alertmanager-svc.yaml
-#kubectl create -f node-exporter.yaml
+kubectl create -f node-exporter.yaml
 kubectl create -f prometheus-rc.yaml
 kubectl create -f grafana-rc.yaml
 kubectl create -f alertmanager-rc.yaml
