@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+ nginx-entrypoint.sh: |+
+    set -x
+
+    mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.orig
+    cp /opt/nginxconfig2/* /etc/nginx/conf.d/ 
+
+    chmod a+x /conf/nginx-ifconfig.sh
+    /conf/nginx-ifconfig.sh
+    service nginx start 
+    sleep infinity
+--- 
+
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: nginx-proxy
+spec:
+  terminationGracePeriodSeconds: 0
+  restartPolicy: Never
+  nodeSelector:
+    kubernetes.io/hostname: 192.168.28.119
+  containers:
+  - name: nginx
+    image: "nginx:latest"
+    imagePullPolicy: IfNotPresent
+    args:
+    - chmod a+x /conf/nginx-entrypoint.sh;/conf/nginx-entrypoint.sh
+    command:
+    - "/bin/bash"
+    - "-c"
+    stdin: true
+    tty: true
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - name: conf
+      mountPath: /conf
+      readOnly: false
+    - name: nginxconf-dir
+      mountPath: /opt/nginxconfig2
+      readOnly: false
+  volumes:
+  - name: nginxconf-dir
+    persistentVolumeClaim:
+      claimName: nginxconfig2-pvc
+  - name: conf
+    configMap:
+      name: nginx-config
+      items:
+      - key: nginx-entrypoint.sh
+        path: nginx-entrypoint.sh
