@@ -1,15 +1,16 @@
 global:
-  resolve_timeout: 5m
+  resolve_timeout: 1m
 route:
   receiver: 'slack'
   routes:
   - match_re:
-      alertname: '.*'
+      alertname: 'Onf.*'
     receiver: 'webhook'
     continue: true
-  group_wait: 10s
-  group_interval: 10s
+  group_wait: 5s
+  group_interval: 5s
   repeat_interval: 1h
+  group_by: [alertname, instance]
 inhibit_rules:
 - source_match:
     severity: critical
@@ -27,5 +28,5 @@ receivers:
 
 - name: 'webhook'
   webhook_configs:
-  - send_resolved: false
-    url: 'http://node3:9333/'
+  - send_resolved: true
+    url: 'http://localhost:9333/'
