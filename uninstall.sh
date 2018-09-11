@@ -12,3 +12,4 @@ kubectl delete -f node-exporter.yaml
 kubectl delete -f prometheus-rc.yaml
 kubectl delete -f grafana-rc.yaml
 kubectl delete -f alertmanager-rc.yaml
+kubectl delete -f cadvisor.yaml
