@@ -16,7 +16,6 @@
   "editable": true,
   "gnetId": 4018,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "panels": [
     {
@@ -717,9 +716,103 @@
       "fill": 1,
       "gridPos": {
         "h": 6,
-        "w": 6,
+        "w": 24,
         "x": 0,
         "y": 7
+      },
+      "id": 18,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "-sum (rate (container_network_receive_bytes_total{}[1m])*8) by (name)",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "{{name}}",
+          "metric": "node_load1",
+          "refId": "A",
+          "step": 10
+        },
+        {
+          "expr": "sum (rate (container_network_transmit_bytes_total{}[1m])*8) by (name)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{name}}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Data Transfer",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prom",
+      "fill": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 13
       },
       "id": 8,
       "legend": {
@@ -805,7 +898,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 7
+        "y": 13
       },
       "id": 7,
       "legend": {
@@ -892,7 +985,7 @@
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 7
+        "y": 13
       },
       "height": "230px",
       "id": 3,
@@ -979,7 +1072,7 @@
         "h": 6,
         "w": 4,
         "x": 18,
-        "y": 7
+        "y": 13
       },
       "height": "",
       "id": 1,
@@ -1067,7 +1160,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 13
+        "y": 19
       },
       "id": 17,
       "legend": {
@@ -1153,7 +1246,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 13
+        "y": 19
       },
       "height": "300px",
       "id": 10,
@@ -1240,7 +1333,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 13
+        "y": 19
       },
       "height": "230px",
       "id": 6,
@@ -1328,7 +1421,7 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
