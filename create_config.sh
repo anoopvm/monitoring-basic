@@ -14,3 +14,4 @@ sudo cp prometheus-datasource.yaml /var/lib/docker/containers/telemetry/provisio
 sudo cp dashboard.yaml /var/lib/docker/containers/telemetry/provisioning/dashboards
 sudo cp node_metrics.json /var/lib/docker/containers/telemetry/dashboards
 sudo cp k8s_cluster.json /var/lib/docker/containers/telemetry/dashboards
+sudo cp nginx_data_transfer.json /var/lib/docker/containers/telemetry/dashboards
