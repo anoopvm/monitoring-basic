@@ -1,0 +1,32 @@
+groups:
+- name: rules
+  rules:
+  - alert: OnfNetworkUsageHigh
+    annotations:
+      description: Container Network usage high.
+      summary: The Container usage is {{ $value }}, which is greater than the threshold limit 5000.
+    expr: sum(irate(container_network_receive_bytes_total{container_name="POD"}[1m])) by (instance) > 5000
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
+      
+  - alert: OnfNetworkUsageHigh1
+    annotations:
+      description: Container Network usage high.
+      summary: The Container usage is {{ $value }}, which is greater than the threshold limit 5000.
+    expr: sum(irate(container_network_receive_bytes_total{container_name="POD"}[1m])) by (instance) > 5000
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
+
+  - alert: OnfNetworkUsageHigh2
+    annotations:
+      description: Container Network usage high.
+      summary: The Container usage is {{ $value }}, which is greater than the threshold limit 5000.
+    expr: sum(irate(container_network_receive_bytes_total{container_name="POD"}[1m])) by (instance) > 5000
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical

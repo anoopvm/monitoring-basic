@@ -96,3 +96,33 @@ groups:
       alertsrc: prometheus
       dashboard: https://grafana.com
       severity: critical
+
+  - alert: OnfNetworkUsageHigh
+    annotations:
+      description: Network usage high.
+      summary: The usage is {{ $value }}, which is greater than the threshold limit 5000.
+    expr: sum(irate(node_network_receive_bytes_total[1m])) by (instance) > 5000
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
+      
+  - alert: OnfNetworkUsageHigh1
+    annotations:
+      description: Network usage high.
+      summary: The usage is {{ $value }}, which is greater than the threshold limit 5000.
+    expr: sum(irate(node_network_receive_bytes_total{instance="10.255.136.135:9100"}[1m])) by (instance) > 5000
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
+
+  - alert: OnfNetworkUsageHigh2
+    annotations:
+      description: Network usage high.
+      summary: The usage is {{ $value }}, which is greater than the threshold limit 5000.
+    expr: sum(irate(node_network_receive_bytes_total{instance="10.255.136.136:9100"}[1m])) by (instance) > 5000
+    labels:
+      alertsrc: prometheus
+      dashboard: https://grafana.com
+      severity: critical
